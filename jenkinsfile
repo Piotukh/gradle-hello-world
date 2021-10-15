@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+   label slave1
+  }
+  tools {
+   gradle 'gradle4'
+  }
     stages {
       stage('checkout') {
         steps {
@@ -8,7 +13,7 @@ pipeline {
           }
       stage('build') {
         steps {
-         sh "${gradleHome}/bin/gradle build"
+         sh "env.PATH build"
         }
       }    
     }
