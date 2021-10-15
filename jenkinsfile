@@ -16,7 +16,23 @@ pipeline {
          echo "Path is" + env.PATH
          sh "gradle build"
         }
-      }    
+      }  
+      stage('unit-test') {
+        steps {
+          sh 'gradle test'
+        }
+      }
+      stage('func-test') {
+        parallel{
+          stage('First-test') {
+            def tests = ["one" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar nastya 'Hello Nastya!'"},
+                         "two" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar playTika 'Hello Playtika!'"},
+                         "three" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar world 'Hello World!'"}]
+              
+            }
+          }
+        }
+      }
     }
     post {
       success {
