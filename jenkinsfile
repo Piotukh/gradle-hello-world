@@ -14,21 +14,21 @@ pipeline {
       stage('build') {
         steps {
          echo "Path is" + env.PATH
-         sh "gradle build"
+         sh "gradle clean build"
         }
       }  
       stage('unit-test') {
         steps {
           sh 'gradle test'
-          junit test-results/junit-platform/*.xml
+          junit "build/test-results/junit-platform/*.xml"
         }
       }
       stage('func-test') {
         parallel{
           stage('First-test') {
-            def tests = ["one" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar nastya 'Hello Nastya!'"},
-                         "two" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar playTika 'Hello Playtika!'"},
-                         "three" : { sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar world 'Hello World!'"}]
+            def tests = ["one" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar nastya 'Hello Nastya!'""},
+                         "two" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar playTika 'Hello Playtika!'""},
+                         "three" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar world 'Hello World!'""}]
               
             }
           }
