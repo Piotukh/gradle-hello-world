@@ -13,7 +13,8 @@ pipeline {
           }
       stage('build') {
         steps {
-         sh "env.PATH build"
+         echo "Path is" + env.PATH
+         sh "gradle build"
         }
       }    
     }
