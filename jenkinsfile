@@ -24,14 +24,13 @@ pipeline {
         }
       }
       stage('func-test') {
-        parallel{
-          stage('First-test') {
-            def tests = ["one" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar nastya 'Hello Nastya!'""},
-                         "two" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar playTika 'Hello Playtika!'""},
-                         "three" : { sh "sh "test-data/int-test.shbuild/libs/oto-gradle-1.0.jar world 'Hello World!'""}]
+        parallel(
+                "one" : { sh "sh "test-data/int-test.sh build/libs/oto-gradle-1.0.jar nastya 'Hello Nastya!'""},
+                "two" : { sh "sh "test-data/int-test.sh build/libs/oto-gradle-1.0.jar playTika 'Hello Playtika!'""},
+                "three" : { sh "sh "test-data/int-test.sh build/libs/oto-gradle-1.0.jar world 'Hello World!'""}]
               
             }
-          }
+          )
         }
       }
     }
