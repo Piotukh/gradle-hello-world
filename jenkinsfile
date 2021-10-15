@@ -20,6 +20,7 @@ pipeline {
       stage('unit-test') {
         steps {
           sh 'gradle test'
+          junit test-results/junit-platform/*.xml
         }
       }
       stage('func-test') {
