@@ -1,19 +1,23 @@
-node('slave1') {
-def gradleHome = tool 'gradle4'
-  stage ('checkout'){
-     checkout scm
-  }
-  stage ('build'){
-      sh "${gradleHome}/bin/gradle build"
-  }
-  stage('post') {
-  echo "Build result is " + currentBuild.result
-  if ( currentBuild.result == 'SUCCESS') {
-   addBadge(icon: 'green.gif', text: 'Build Succeeded')
-  }
-  if (currentBuild.result == 'FAILURE') {
-   addBadge(icon: 'red.gif', text: 'Build Failed')
-  } 
- }
-  
+pipeline {
+  agent slave1
+    stages {
+      stage('checkout') {
+        steps {
+         checkout scm
+          } 
+          }
+      stage('build') {
+        steps {
+         sh "${gradleHome}/bin/gradle build"
+        }
+      }    
+    }
+    post {
+      success {
+       addBadge(icon: 'green.gif', text: 'SUCCESS')
+      }
+      failure {
+       addBadge(icon: 'red.gif', text: 'FAILURE')
+      }
+    }
 }
